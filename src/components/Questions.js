@@ -1,5 +1,8 @@
 /* eslint-disable max-len */
 import React, { Component } from 'react';
+import questionRandomizer from '../state/questionRandomizer';
+
+
 
 export default class Questions extends Component {
   render() {
