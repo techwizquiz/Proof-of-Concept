@@ -5,9 +5,9 @@ export default class QuizPage extends Component {
   render() {
     return (
       <>
-        <form>
-          <Questions />
-        </form>
+
+        <Questions />
+
       </>
     );
   }
