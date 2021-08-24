@@ -4,12 +4,13 @@ import questionRandomizer from '../state/questionRandomizer';
 import { questions } from '../resources/QuestionPool';
 
 const Questions = () => {
-  const [seenQuestionIds, setSeenQuestionIds] = useState([]);
+  const [seenQuestionIds, setSeenQuestionIds] = useState(() => JSON.parse(localStorage.getItem('seenQuestionIds')) || []);
   const [question, setQuestion] = useState(questionRandomizer(questions, seenQuestionIds));
   const [correct, setCorrect] = useState(+localStorage.getItem('correct'));
   const [incorrect, setIncorrect] = useState(+localStorage.getItem('incorrect'));
   const [selectedChoice, setSelectedChoice] = useState(null);
 
+  console.log(question);
   useEffect(() => {
     localStorage.setItem('correct', correct);
   }, [correct]
@@ -21,20 +22,20 @@ const Questions = () => {
   );
 
   useEffect(() => {
-    localStorage.setItem('seenQuestionIds', seenQuestionIds);
+    localStorage.setItem('seenQuestionIds', JSON.stringify(seenQuestionIds));
   }, [seenQuestionIds]);
 
-  console.log('seenQuestionIds', seenQuestionIds);
 
   const increment = (id) => {
     // setSeenQuestionIds: add new id to array of ids in state
     setSeenQuestionIds(seenQuestionIds => [...seenQuestionIds, id]);
-    if(selectedChoice === question.answer) {
+    if (selectedChoice === question.answer) {
       setCorrect((prevCount) => prevCount + 1);
     } else {
       setIncorrect((prevCount) => prevCount + 1);
     }
   };
+  console.log('seenQuestionIds', seenQuestionIds);
 
   return (
     <form>
@@ -52,7 +53,7 @@ const Questions = () => {
 
         </div>
 
-        <button onClick={increment(question.id)}>Submit</button>
+        <button onClick={() => increment(question.id)}>Submit</button>
         <p>Right Answers: {correct}</p>
         <p>Wrong Answers: {incorrect}</p>
       </div>
