@@ -16,7 +16,7 @@ const Questions = () => {
   const [selectedChoice, setSelectedChoice] = useState(null);
 
 
-
+  console.log(selectedChoice);
 
 
 
@@ -28,18 +28,23 @@ const Questions = () => {
     }
   };
 
-  console.log(question);
-  const handleChange = ({ target }) => setSelectedChoice(target.value);
+
+
   return (
     <form>
       <div>
         <p>Question: {question.question}</p>
 
         <div>
-          <label><input type="radio" name="answer" value="A" onClick={{ handleChange } => setCorrect(target.value)} /> A: {question.choiceA}</label>
-          <label><input type="radio" name="answer" value="B" />B: {question.choiceB}</label>
-          <label><input type="radio" name="answer" value="C" />C: {question.choiceC}</label>
-          <label><input type="radio" name="answer" value="D" />D: {question.choiceD}</label>
+          <label><input type="radio" name="answer" value="A" onClick={({ target }) => setSelectedChoice(target.value)} /> A: {question.choiceA}</label>
+
+
+          <label><input type="radio" name="answer" value="B" onClick={({ target }) => setSelectedChoice(target.value)} />B:  {question.choiceB}</label>
+
+          <label><input type="radio" name="answer" value="C" onClick={({ target }) => setSelectedChoice(target.value)} />C: {question.choiceC}</label>
+
+          <label><input type="radio" name="answer" value="D" onClick={({ target }) => setSelectedChoice(target.value)} />D: {question.choiceD}</label>
+
         </div>
       </div>
     </form>
