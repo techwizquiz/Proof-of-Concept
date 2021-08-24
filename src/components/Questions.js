@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import questionRandomizer from '../state/questionRandomizer';
 import { questions } from '../resources/QuestionPool';
 
@@ -11,12 +11,21 @@ import { questions } from '../resources/QuestionPool';
 
 const Questions = () => {
   const [question, setQuestion] = useState(questionRandomizer(questions));
-  const [correct, setCorrect] = useState(null);
-  const [incorrect, setIncorrect] = useState(null);
+  const [correct, setCorrect] = useState(0);
+  const [incorrect, setIncorrect] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState(null);
 
+  useEffect(() => {
+    localStorage.setItem('correct', correct);
+  }, [correct]
+  );
 
-  console.log(selectedChoice);
+  useEffect(() => {
+    localStorage.setItem('incorrect', incorrect);
+  }, [incorrect]
+  );
+
+
 
 
 
@@ -28,6 +37,8 @@ const Questions = () => {
     }
   };
 
+  console.log(selectedChoice);
+  console.log(question.answer);
 
 
   return (
@@ -46,6 +57,10 @@ const Questions = () => {
           <label><input type="radio" name="answer" value="D" onClick={({ target }) => setSelectedChoice(target.value)} />D: {question.choiceD}</label>
 
         </div>
+
+        <button onClick={increment}>Submit</button>
+        <p>Right Answers: {correct}</p>
+        <p>Wrong Answers: {incorrect}</p>
       </div>
     </form>
   );
