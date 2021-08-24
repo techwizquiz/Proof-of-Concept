@@ -11,24 +11,42 @@ import { questions } from '../resources/QuestionPool';
 
 const Questions = () => {
   const [question, setQuestion] = useState(questionRandomizer(questions));
+  const [correct, setCorrect] = useState(null);
+  const [incorrect, setIncorrect] = useState(null);
+  const [selectedChoice, setSelectedChoice] = useState(null);
+
+
+
+
+
+
+  const increment = () => {
+    if (selectedChoice === question.answer) {
+      setCorrect((prevCount) => prevCount + 1);
+    } else {
+      setIncorrect((prevCount) => prevCount + 1);
+    }
+  };
 
   console.log(question);
-
+  const handleChange = ({ target }) => setSelectedChoice(target.value);
   return (
-    <div>       
-      <p>Question: {question.question}</p>       
-      
-      <div>       
-        <label><input type="radio" name="answer" value="A" /> A: {question.choiceA}</label>
-        <label><input type="radio" name="answer" value="B"/>B: {question.choiceB}</label>   
-        <label><input type="radio" name="answer" value="C"/>C: {question.choiceC}</label>       
-        <label><input type="radio" name="answer" value="D"/>D: {question.choiceD}</label>
-      </div>       
-    </div>
+    <form>
+      <div>
+        <p>Question: {question.question}</p>
+
+        <div>
+          <label><input type="radio" name="answer" value="A" onClick={{ handleChange } => setCorrect(target.value)} /> A: {question.choiceA}</label>
+          <label><input type="radio" name="answer" value="B" />B: {question.choiceB}</label>
+          <label><input type="radio" name="answer" value="C" />C: {question.choiceC}</label>
+          <label><input type="radio" name="answer" value="D" />D: {question.choiceD}</label>
+        </div>
+      </div>
+    </form>
   );
 };
 
-export default Questions; 
+export default Questions;
 
 // export default class Questions extends Component {
 //   render() {
@@ -36,7 +54,7 @@ export default Questions;
 //       <div>
 //         <p>Level: {level}</p>       
 //         <p>Question: {question}</p>       
-        
+
 //         <div>       
 //           <input type="radio" name="answer" value="A">A: {choiceA}</input>       
 //           <input type="radio" name="answer" value="B">B: {choiceB}</input>       
@@ -47,3 +65,21 @@ export default Questions;
 //     );
 //   }
 // }
+
+// const correct = () => {
+//   const [correct, setCorrect] = useState(null);
+//   const [incorrect, setIncorrect] = useState(null);
+
+//   const selectedChoice =
+
+// const increment = () => {
+//   if (selectedChoice === questions.answer) {
+//     setCorrect((prevCount) => prevCount + 1);
+//   } else {
+//     setIncorrect((prevCount) => prevCount + 1);
+//   }
+// };
+//   return (
+//     <p>correct: `${correct}`</p>
+//   );
+// };
