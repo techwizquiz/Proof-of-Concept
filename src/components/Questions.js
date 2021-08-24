@@ -46,6 +46,10 @@ const Questions = () => {
           <label><input type="radio" name="answer" value="D" onClick={({ target }) => setSelectedChoice(target.value)} />D: {question.choiceD}</label>
 
         </div>
+
+        <button onClick={increment}>Submit</button>
+        <p>Right Answers: {correct}</p>
+        <p>Wrong Answers: {incorrect}</p>
       </div>
     </form>
   );
