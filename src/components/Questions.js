@@ -11,8 +11,8 @@ import { questions } from '../resources/QuestionPool';
 
 const Questions = () => {
   const [question, setQuestion] = useState(questionRandomizer(questions));
-  const [correct, setCorrect] = useState(0);
-  const [incorrect, setIncorrect] = useState(0);
+  const [correct, setCorrect] = useState(+localStorage.getItem('correct'));
+  const [incorrect, setIncorrect] = useState(+localStorage.getItem('incorrect'));
   const [selectedChoice, setSelectedChoice] = useState(null);
 
   useEffect(() => {
@@ -25,18 +25,28 @@ const Questions = () => {
   }, [incorrect]
   );
 
+  //   const storeScoreValue = (key, defaultValue) => {
+  //     const [state, setState] = useState(
+  //       localStorage.getItem(key) || defaultValue
+  //     );
+  //     useEffect(() => {
+  //       localStorage.setItem(key, state);
+  //     }, [key, state]);
 
+  //     return [state, setState];
+  //   };
 
-
+ 
 
   const increment = () => {
-    if (selectedChoice === question.answer) {
+    if(selectedChoice === question.answer) {
       setCorrect((prevCount) => prevCount + 1);
     } else {
       setIncorrect((prevCount) => prevCount + 1);
     }
+    
   };
-
+ 
   console.log(selectedChoice);
   console.log(question.answer);
 
@@ -48,7 +58,6 @@ const Questions = () => {
 
         <div>
           <label><input type="radio" name="answer" value="A" onClick={({ target }) => setSelectedChoice(target.value)} /> A: {question.choiceA}</label>
-
 
           <label><input type="radio" name="answer" value="B" onClick={({ target }) => setSelectedChoice(target.value)} />B:  {question.choiceB}</label>
 
