@@ -11,6 +11,7 @@ const Questions = () => {
   const [selectedChoice, setSelectedChoice] = useState(null);
 
   console.log(question);
+
   useEffect(() => {
     localStorage.setItem('correct', correct);
   }, [correct]
@@ -25,16 +26,16 @@ const Questions = () => {
     localStorage.setItem('seenQuestionIds', JSON.stringify(seenQuestionIds));
   }, [seenQuestionIds]);
 
-
   const increment = (id) => {
     // setSeenQuestionIds: add new id to array of ids in state
     setSeenQuestionIds(seenQuestionIds => [...seenQuestionIds, id]);
-    if (selectedChoice === question.answer) {
+    if(selectedChoice === question.answer) {
       setCorrect((prevCount) => prevCount + 1);
     } else {
       setIncorrect((prevCount) => prevCount + 1);
     }
   };
+
   console.log('seenQuestionIds', seenQuestionIds);
 
   return (

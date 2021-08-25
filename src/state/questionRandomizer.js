@@ -4,9 +4,11 @@ const questionRandomizer = (questionArr, stateArr) => {
   // if new question is in seenQuestions array, choose a different question
   // if not in seenQuestions array, push question into seenQuestions array and return the question
   const newQuestionIndex = Math.floor(Math.random() * questionArr.length);
-  if (stateArr.includes(questionArr[newQuestionIndex].id) === false) {
+  if(stateArr.includes(questionArr[newQuestionIndex].id) === false) {
     // set stateArr to include id of the newly selected question
     return questionArr[newQuestionIndex];
+  } else {
+    return questionRandomizer(questionArr, stateArr);
   }
 };
 
