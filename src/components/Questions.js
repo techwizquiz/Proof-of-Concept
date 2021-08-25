@@ -3,17 +3,14 @@ import React, { useState, useEffect } from 'react';
 import questionRandomizer from '../state/questionRandomizer';
 import { questions } from '../resources/QuestionPool';
 
-// on load, choose a random question
-// display question and answers
-// user chooses their answer
-// if correct, they get one point added to score and new question loads
-// if incorrect, new question loads
-
 const Questions = () => {
-  const [question, setQuestion] = useState(questionRandomizer(questions));
+  const [seenQuestionIds, setSeenQuestionIds] = useState(() => JSON.parse(localStorage.getItem('seenQuestionIds')) || []);
+  const [question, setQuestion] = useState(questionRandomizer(questions, seenQuestionIds));
   const [correct, setCorrect] = useState(+localStorage.getItem('correct'));
   const [incorrect, setIncorrect] = useState(+localStorage.getItem('incorrect'));
   const [selectedChoice, setSelectedChoice] = useState(null);
+
+  console.log(question);
 
   useEffect(() => {
     localStorage.setItem('correct', correct);
@@ -25,31 +22,21 @@ const Questions = () => {
   }, [incorrect]
   );
 
-  //   const storeScoreValue = (key, defaultValue) => {
-  //     const [state, setState] = useState(
-  //       localStorage.getItem(key) || defaultValue
-  //     );
-  //     useEffect(() => {
-  //       localStorage.setItem(key, state);
-  //     }, [key, state]);
+  useEffect(() => {
+    localStorage.setItem('seenQuestionIds', JSON.stringify(seenQuestionIds));
+  }, [seenQuestionIds]);
 
-  //     return [state, setState];
-  //   };
-
- 
-
-  const increment = () => {
+  const increment = (id) => {
+    // setSeenQuestionIds: add new id to array of ids in state
+    setSeenQuestionIds(seenQuestionIds => [...seenQuestionIds, id]);
     if(selectedChoice === question.answer) {
       setCorrect((prevCount) => prevCount + 1);
     } else {
       setIncorrect((prevCount) => prevCount + 1);
     }
-    
   };
- 
-  console.log(selectedChoice);
-  console.log(question.answer);
 
+  console.log('seenQuestionIds', seenQuestionIds);
 
   return (
     <form>
@@ -67,7 +54,7 @@ const Questions = () => {
 
         </div>
 
-        <button onClick={increment}>Submit</button>
+        <button onClick={() => increment(question.id)}>Submit</button>
         <p>Right Answers: {correct}</p>
         <p>Wrong Answers: {incorrect}</p>
       </div>
@@ -76,39 +63,3 @@ const Questions = () => {
 };
 
 export default Questions;
-
-// export default class Questions extends Component {
-//   render() {
-//     return (
-//       <div>
-//         <p>Level: {level}</p>       
-//         <p>Question: {question}</p>       
-
-//         <div>       
-//           <input type="radio" name="answer" value="A">A: {choiceA}</input>       
-//           <input type="radio" name="answer" value="B">B: {choiceB}</input>       
-//           <input type="radio" name="answer" value="C">C: {choiceC}</input>       
-//           <input type="radio" name="answer" value="D">D: {choiceD}</input>
-//         </div>       
-//       </div>
-//     );
-//   }
-// }
-
-// const correct = () => {
-//   const [correct, setCorrect] = useState(null);
-//   const [incorrect, setIncorrect] = useState(null);
-
-//   const selectedChoice =
-
-// const increment = () => {
-//   if (selectedChoice === questions.answer) {
-//     setCorrect((prevCount) => prevCount + 1);
-//   } else {
-//     setIncorrect((prevCount) => prevCount + 1);
-//   }
-// };
-//   return (
-//     <p>correct: `${correct}`</p>
-//   );
-// };
